@@ -1,0 +1,456 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Card from '../components/Card.astro';
+---
+
+<div class="loader">
+	<div class="counter">0</div>
+  </div>
+  <nav>
+	<div class="logo-container">
+	  <div class="logo"><h1>DE2DE</h1></div>
+	  <div class="logo-name"><p>Linux Customization tool //////</p></div>
+	</div>
+	<div class="nav-buttons">
+	  <div class="btn">
+		<a href="/kb"><button><span>·</span>KnowledgeBase</button></a> 
+	  </div>
+	  <div class="btn">
+		<button><span>·</span>Download</button>
+	  </div>
+	</div>
+  </nav>
+
+  <div class="sub-nav">
+	<p class="intro">
+	  The Linux Theme Configuration and Desktop Environment
+Customization Tool (LTCDCT) is an innovative software
+application designed to simplify and enhance the user
+experience for those transitioning to Linux from other operating
+systems
+	</p>
+	<p class="primary">Linux for the win</p>
+  </div>
+
+  <div class="hero-img">
+	<div class="mask"></div>
+	<div class="mask"></div>
+	<div class="mask"></div>
+	<div class="mask"></div>
+	<div class="mask"></div>
+	<div class="mask"></div>
+	<div class="mask"></div>
+	<div class="mask"></div>
+	<div class="mask"></div>
+	<div class="mask"></div>
+  </div>
+
+  <footer>
+	<div class="slide-copy">
+	  <div class="slide-index"><p>Meet Authors</p></div>
+	  <div class="slide-name"><p>DecentParadox[Sasank] <br /> DumbPrism[Arhant]</p></div>
+	  <a href="https://github.com/withde2de/de2de"><button><span>·</span> Github</button></a>
+	</div>
+	<div class="slide-info">
+	  <div class="year">
+		<p><span>·</span> year</p>
+		<p>2024</p>
+	  </div>
+	  <div class="agency">
+		<p><span>·</span> Licence</p>
+		<p>// GPL V3</p>
+	  </div>
+	  <div class="role">
+		<p><span>·</span> role</p>
+		<p>// Linux Ricing</p>
+	  </div>
+	  
+	</div>
+  </footer>
+<script>
+	import { gsap } from "gsap";
+	document.addEventListener("DOMContentLoaded", () => {
+  const counter:any = document.querySelector(".counter");
+  const loader = document.querySelector(".loader");
+  const elementsToAnimate = document.querySelectorAll(
+    "p:not(.intro), .logo h1"
+  );
+  const introTag:any = document.querySelector(".intro");
+  let animationsInitialized = false;
+
+  function shuffleText(finalText:any, duration:any, callback:any) {
+    let i = 0;
+    const shuffleInterval = setInterval(() => {
+      if (i < duration) {
+        counter.innerHTML = Math.random().toString(36).substring(2, 8);
+        i++;
+      } else {
+        clearInterval(shuffleInterval);
+        counter.innerHTML = finalText;
+        if (callback) callback();
+      }
+    }, 100);
+  }
+
+  function removeLetters() {
+    let text = counter.innerHTML;
+    const removeInterval = setInterval(() => {
+      if (text.length > 0) {
+        text = text.substring(0, text.length - 1);
+        counter.innerHTML = text;
+      } else {
+        clearInterval(removeInterval);
+        if (!animationsInitialized) {
+          animateElements();
+          animateIntroTag();
+        }
+        fadeOutLoader();
+      }
+    }, 100);
+  }
+
+  function animateElements() {
+    if (animationsInitialized) return;
+    animationsInitialized = true;
+
+    elementsToAnimate.forEach((element) => {
+      let originalText = element.textContent;
+      let index = 0;
+
+      const shuffleElement = setInterval(() => {
+	  if (originalText && index < originalText.length) {
+          let shuffledText = "";
+          for (let i = 0; i <= index; i++) {
+            shuffledText +=
+              i < index ? originalText[i] : Math.random().toString(36)[2];
+          }
+          element.textContent =
+            shuffledText + originalText.substring(index + 1);
+          index++;
+        } else {
+          clearInterval(shuffleElement);
+          element.textContent = originalText;
+        }
+      }, 100);
+    });
+  }
+
+  function animateIntroTag() {
+	let originalText:any = introTag?.textContent;
+    let currentText = "";
+    let index = 0;
+
+    const revealText = setInterval(() => {
+      if (index < originalText.length) {
+        currentText += originalText[index];
+        introTag.textContent = currentText;
+        index++;
+      } else {
+        clearInterval(revealText);
+      }
+    }, 25);
+  }
+
+  function animateMasks() {
+    const masks = document.querySelectorAll(".hero-img .mask");
+    const clipPathValues = [
+      "polygon(10% 0, 0 0, 0 100%, 10% 100%)",
+      "polygon(20% 0, 10% 0, 10% 100%, 20% 100%)",
+      "polygon(30% 0, 20% 0, 20% 100%, 30% 100%)",
+      "polygon(40% 0, 30% 0, 30% 100%, 40% 100%)",
+      "polygon(50% 0, 40% 0, 40% 100%, 50% 100%)",
+      "polygon(60% 0, 50% 0, 50% 100%, 60% 100%)",
+      "polygon(70% 0, 60% 0, 60% 100%, 70% 100%)",
+      "polygon(80% 0, 70% 0, 70% 100%, 80% 100%)",
+      "polygon(90% 0, 80% 0, 80% 100%, 90% 100%)",
+      "polygon(100% 0, 90% 0, 90% 100%, 100% 100%)",
+    ];
+
+    setTimeout(() => {
+      masks.forEach((mask, index) => {
+        gsap.to(mask, {
+          clipPath: clipPathValues[index % clipPathValues.length],
+          duration: 1,
+          delay: index * 0.1,
+        });
+      });
+    });
+  }
+
+  gsap.to(counter, {
+    innerHTML: 100 + "%",
+    duration: 3,
+    snap: "innerHTML",
+    ease: "none",
+    onComplete: () => {
+      setTimeout(
+        () =>
+          shuffleText("De2De/24", 20, () => {
+            setTimeout(removeLetters, 500);
+          }),
+        500
+      );
+    },
+  });
+
+  function fadeOutLoader() {
+    gsap.to(loader, {
+      opacity: 0,
+      pointerEvents: "none",
+      duration: 1,
+      onComplete: () => {
+        animateMasks();
+      },
+    });
+  }
+});
+
+</script>
+<style>
+	:root {
+  --color-bg: #91978a;
+  --color-accent: #6c29ab;
+  --color-text: #322c26;
+}
+@font-face {
+  font-family: "Cambridge";
+  src: url(../Cambridge.otf);
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  font-family: "Monorama";
+  background: var(--color-bg);
+}
+
+p {
+  font-size: 17px;
+  line-height: 1;
+  columns: var(--color-accent) !important;
+}
+
+nav {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2em 4em;
+}
+
+.logo h1 {
+  font-family: "Cambridge";
+  font-size: 80px;
+  color: var(--color-accent);
+}
+
+.logo-name {
+  color: var(--color-text);
+}
+
+.nav-buttons {
+  display: flex;
+  align-items: center;
+  gap: 2em;
+}
+
+button {
+  position: relative;
+  background: none;
+  outline: none;
+  border: 1px solid var(--color-text);
+  border-radius: 0.25em;
+  font-size: 17px;
+  color: var(--color-text);
+  font-family: "Monorama";
+  padding: 0.25em 0.75em;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.3s;
+  z-index: 100;
+}
+
+button span {
+  padding-right: 0.5em;
+}
+
+button:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 100%;
+  background: var(--color-text);
+  z-index: -1;
+  transition: all 0.3s;
+}
+
+button:hover {
+  color: var(--color-bg);
+}
+
+button:hover::after {
+  width: 100%;
+}
+
+.sub-nav {
+  position: relative;
+  right: -25%;
+  width: 75%;
+  padding: 4em;
+  display: flex;
+  justify-content: space-between;
+  color: var(--color-text);
+}
+
+.sub-nav p:nth-child(1) {
+  width: 30%;
+}
+
+p.primary {
+  font-size: 40px;
+  text-align: right;
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 2em 4em 4em 4em;
+  display: flex;
+}
+
+footer > div {
+  flex: 1;
+}
+
+.slide-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 2em;
+}
+
+.slide-info > div {
+  flex: 1;
+}
+
+.slide-name p {
+  font-size: 22px;
+  padding: 0.5em 0 1.5em 0;
+}
+
+.year p:nth-child(1),
+.agency p:nth-child(1),
+.role p:nth-child(1),
+.awards p:nth-child(1) {
+  margin-bottom: 2em;
+}
+
+.hero-img {
+  position: absolute;
+  right: 4em;
+  bottom: 35%;
+  width: 600px;
+  height: 200px;
+}
+
+.mask {
+  position: absolute;
+  width: 600px;
+  height: 200px;
+  background: url(../hero.jpg) no-repeat 50% 50%;
+  background-size: cover;
+}
+
+.loader {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--color-accent);
+  color: var(--color-text);
+  z-index: 10000;
+}
+
+.counter {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  font-size: 40px;
+  padding: 2em;
+  color: var(--color-bg);
+}
+
+.mask:nth-child(1) {
+  clip-path: polygon(0% 0, 0% 0, 0% 100%, 0% 100%);
+}
+
+.mask:nth-child(2) {
+  clip-path: polygon(10% 0, 10% 0, 10% 100%, 10% 100%);
+}
+
+.mask:nth-child(3) {
+  clip-path: polygon(20% 0, 20% 0, 20% 100%, 20% 100%);
+}
+
+.mask:nth-child(4) {
+  clip-path: polygon(30% 0, 30% 0, 30% 100%, 30% 100%);
+}
+
+.mask:nth-child(5) {
+  clip-path: polygon(40% 0, 40% 0, 40% 100%, 40% 100%);
+}
+
+.mask:nth-child(6) {
+  clip-path: polygon(50% 0, 50% 0, 50% 100%, 50% 100%);
+}
+
+.mask:nth-child(7) {
+  clip-path: polygon(60% 0, 60% 0, 60% 100%, 60% 100%);
+}
+
+.mask:nth-child(8) {
+  clip-path: polygon(70% 0, 70% 0, 70% 100%, 70% 100%);
+}
+
+.mask:nth-child(9) {
+  clip-path: polygon(80% 0, 80% 0, 80% 100%, 80% 100%);
+}
+
+.mask:nth-child(10) {
+  clip-path: polygon(90% 0, 90% 0, 90% 100%, 90% 100%);
+}
+
+@media (max-width: 900px) {
+  .logo h1 {
+    font-size: 24px;
+  }
+
+  .sub-nav {
+    right: 0;
+    width: 100%;
+  }
+
+  p.intro {
+    display: none;
+  }
+
+  .slide-name p {
+    font-size: 24px;
+  }
+
+  .awards,
+  .agency {
+    display: none;
+  }
+}
+
+</style>
